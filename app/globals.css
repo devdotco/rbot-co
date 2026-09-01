@@ -23,12 +23,6 @@
   --pad:     clamp(20px,4vw,72px);
 }
 
-@media (prefers-color-scheme: dark) { :root {
-  --bg:#090909; --bg1:#0D0D0D; --bg2:#111111; --bg3:#161616;
-  --bdr:#1A1A1A; --bdr2:#222222; --bdr3:#2C2C2C;
-  --t1:#EDEAE5; --t2:#7A7875; --t3:#454340;
-  --nav-bg:rgba(9,9,9,.92);
-}}
 :root[data-theme="dark"] {
   --bg:#090909; --bg1:#0D0D0D; --bg2:#111111; --bg3:#161616;
   --bdr:#1A1A1A; --bdr2:#222222; --bdr3:#2C2C2C;
