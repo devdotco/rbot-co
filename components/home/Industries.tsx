@@ -19,7 +19,7 @@ export default function Industries() {
           ))}
         </div>
         <div style={{ marginTop: 32 }}>
-          <Link href="/solutions" className="btn btn-g">Explore All Industries</Link>
+          <Link href="/solutions/manufacturing" className="btn btn-g">Explore All Industries</Link>
         </div>
       </div>
     </section>

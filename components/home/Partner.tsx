@@ -26,7 +26,7 @@ export default function Partner() {
               Join the network to receive qualified leads, co-deploy with our team, and build a recurring
               service business around physical AI.
             </p>
-            <Link href="/company/join" className="btn btn-p">Join the RBOT Network</Link>
+            <Link href="/assessment" className="btn btn-p">Join the RBOT Network</Link>
           </div>
         </div>
       </div>
