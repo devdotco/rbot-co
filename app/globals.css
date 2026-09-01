@@ -2,34 +2,34 @@
 
 /* ── TOKENS ─────────────────────────────────────────────────── */
 :root {
-  --bg:      #090909;
-  --bg1:     #0D0D0D;
-  --bg2:     #111111;
-  --bg3:     #161616;
-  --bdr:     #1A1A1A;
-  --bdr2:    #222222;
-  --bdr3:    #2C2C2C;
-  --t1:      #EDEAE5;
-  --t2:      #7A7875;
-  --t3:      #454340;
+  --bg:      #F2F0EC;
+  --bg1:     #ECEAE6;
+  --bg2:     #E6E3DF;
+  --bg3:     #DEDAD5;
+  --bdr:     #D4D1CC;
+  --bdr2:    #C6C3BE;
+  --bdr3:    #B8B5B0;
+  --t1:      #0E0D0B;
+  --t2:      #5C5A56;
+  --t3:      #9C9A96;
   --acc:     #0AAEFF;
-  --acc-bg:  rgba(10,174,255,.10);
-  --acc-bdr: rgba(10,174,255,.22);
+  --acc-bg:  rgba(10,174,255,.12);
+  --acc-bdr: rgba(10,174,255,.28);
   --good:    #22C55E;
   --warn:    #F59E0B;
-  --nav-bg:  rgba(9,9,9,.92);
+  --nav-bg:  rgba(242,240,236,.92);
   --nav-h:   60px;
   --max:     1380px;
   --pad:     clamp(20px,4vw,72px);
 }
 
-@media (prefers-color-scheme: light) { :root {
-  --bg:#F2F0EC; --bg1:#ECEAE6; --bg2:#E6E3DF; --bg3:#DEDAD5;
-  --bdr:#D4D1CC; --bdr2:#C6C3BE; --bdr3:#B8B5B0;
-  --t1:#0E0D0B; --t2:#5C5A56; --t3:#9C9A96;
-  --nav-bg:rgba(242,240,236,.92);
+@media (prefers-color-scheme: dark) { :root {
+  --bg:#090909; --bg1:#0D0D0D; --bg2:#111111; --bg3:#161616;
+  --bdr:#1A1A1A; --bdr2:#222222; --bdr3:#2C2C2C;
+  --t1:#EDEAE5; --t2:#7A7875; --t3:#454340;
+  --nav-bg:rgba(9,9,9,.92);
 }}
-:root[data-theme="dark"]  {
+:root[data-theme="dark"] {
   --bg:#090909; --bg1:#0D0D0D; --bg2:#111111; --bg3:#161616;
   --bdr:#1A1A1A; --bdr2:#222222; --bdr3:#2C2C2C;
   --t1:#EDEAE5; --t2:#7A7875; --t3:#454340;
