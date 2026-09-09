@@ -28,6 +28,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         <main>{children}</main>
         <Footer />
+
+        {/* The Phony chat agent, answering from rbot.co's own crawled
+            corpus rather than a shared one.
+
+            The key is public by design — it is in every visitor's page source,
+            and the property's allowed-origins list on phony.erp.io is what
+            restricts where the widget runs.
+
+            The host MUST be phony.erp.io, not app.erp.io/phony. The tag derives
+            its API endpoint from the ORIGIN of this src, so a path-mounted URL
+            silently loses the /phony prefix: every call goes to app.erp.io,
+            /api/w/session 404s, and the widget never draws — no console error
+            and nothing logged at either end.
+
+            A plain script rather than next/script: the tag reads
+            `document.currentScript` to find its own key and origin, so data-key
+            has to sit on the element the browser actually executes.
+
+            Behaviour — the five second delay before the panel opens on desktop,
+            never on mobile, and the privacy and terms links under the composer
+            — is configured on the property, not here, so it changes without a
+            deploy. */}
+        <script async src="https://phony.erp.io/sdr.js" data-key="pk_faf4ec4c2327dd6ab42ba23f8c8ffd51" />
       </body>
     </html>
   );
