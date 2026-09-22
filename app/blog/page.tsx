@@ -1,95 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import NewsletterForm from "@/components/forms/NewsletterForm";
+import { getPostsSafe, formatDate, readingMinutes } from "@/lib/payload";
 
 export const metadata: Metadata = {
   title: "The Physical AI Report — RBOT Blog",
   description: "Analysis, operations guides, and technology deep-dives on enterprise robotics, physical AI, and the automation of manufacturing and logistics.",
 };
-
-const posts = [
-  {
-    category: "Industry Analysis",
-    title: "Why 2026 Is the Year Humanoids Enter the Workforce",
-    date: "Aug 15, 2026",
-    readTime: "9 min read",
-    excerpt:
-      "The unit economics of humanoid robots crossed a critical threshold this year. We break down the cost, capability, and deployment maturity data that makes 2026 the inflection point — and what it means for enterprise operations teams planning their automation roadmaps.",
-    slug: "humanoids-enter-workforce-2026",
-  },
-  {
-    category: "Technology",
-    title: "Understanding Robot Payload, Reach, and Cycle Time",
-    date: "Aug 8, 2026",
-    readTime: "7 min read",
-    excerpt:
-      "The three most important technical specifications for any robot selection decision — and why operations leaders consistently misinterpret them. We explain what each means in practice and how to use them to filter a robot shortlist.",
-    slug: "payload-reach-cycle-time",
-  },
-  {
-    category: "Operations",
-    title: "How to Calculate the True ROI of a Robot Deployment",
-    date: "Jul 30, 2026",
-    readTime: "11 min read",
-    excerpt:
-      "Most robot ROI calculations undercount costs and overcount benefits. We walk through a rigorous framework — including total cost of ownership, displacement assumptions, integration burden, and the utilization curves that actually drive payback.",
-    slug: "true-roi-robot-deployment",
-  },
-  {
-    category: "Manufacturing",
-    title: "Cobots vs. Industrial Arms: Which Is Right for Your Line?",
-    date: "Jul 22, 2026",
-    readTime: "8 min read",
-    excerpt:
-      "Collaborative robots and traditional industrial arms serve fundamentally different use cases. We break down the trade-offs in payload, speed, safety certification, programming complexity, and cost — with a decision framework for common manufacturing scenarios.",
-    slug: "cobots-vs-industrial-arms",
-  },
-  {
-    category: "Warehousing",
-    title: "AMR vs. AS/RS: Choosing Your Fulfillment Automation Strategy",
-    date: "Jul 14, 2026",
-    readTime: "10 min read",
-    excerpt:
-      "Autonomous Mobile Robots and Automated Storage and Retrieval Systems take fundamentally different approaches to fulfillment automation. We compare capital requirements, throughput ceilings, flexibility, and the facility characteristics that favor each approach.",
-    slug: "amr-vs-asrs-fulfillment",
-  },
-  {
-    category: "Technology",
-    title: "What ROS2 Means for Enterprise Robotics Buyers",
-    date: "Jul 7, 2026",
-    readTime: "6 min read",
-    excerpt:
-      "The Robot Operating System is the software foundation for most modern mobile and collaborative robots. ROS2's architecture has significant implications for integration complexity, vendor lock-in, and long-term maintenance burden — here is what enterprise buyers need to know.",
-    slug: "ros2-enterprise-buyers",
-  },
-  {
-    category: "Industry Analysis",
-    title: "The Labor Math Behind Physical AI Adoption",
-    date: "Jun 28, 2026",
-    readTime: "12 min read",
-    excerpt:
-      "Why is enterprise robotics adoption accelerating now, after decades of incremental growth? We model the labor cost inflation, availability constraints, and turnover economics that are making the automation math work in 2026 for operations that couldn't justify it in 2019.",
-    slug: "labor-math-physical-ai",
-  },
-  {
-    category: "Operations",
-    title: "Field Service Lessons from 500 Robot Deployments",
-    date: "Jun 20, 2026",
-    readTime: "9 min read",
-    excerpt:
-      "After managing the field service operations for over 500 deployed robots, we have a clear picture of what breaks, when it breaks, and how to prevent it. The most valuable lessons are the ones that cost our customers downtime before we learned them.",
-    slug: "field-service-lessons-500",
-  },
-  {
-    category: "Manufacturing",
-    title: "How to Write an RFP for Robotics Integration",
-    date: "Jun 12, 2026",
-    readTime: "8 min read",
-    excerpt:
-      "Most robotics RFPs either under-specify (inviting apples-to-oranges proposals) or over-specify (locking you into a solution before you understand the problem). We provide a template and the reasoning behind each section that will generate useful, comparable vendor responses.",
-    slug: "rfp-robotics-integration",
-  },
-];
 
 const catColors: Record<string, string> = {
   "Industry Analysis": "#0AAEFF",
@@ -99,7 +16,11 @@ const catColors: Record<string, string> = {
   "Warehousing": "#0AAEFF",
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  // Posts come from the CMS. They used to be a hardcoded array of teasers whose slugs
+  // had no detail pages behind them, so every card on this index 404'd.
+  const posts = await getPostsSafe();
+
   return (
     <div style={{ paddingTop: "var(--nav-h)" }}>
 
@@ -172,17 +93,17 @@ export default function BlogPage() {
             background: "var(--bdr)",
             border: "1px solid var(--bdr)"
           }}>
-            {posts.map(post => (
+            {posts.map((post) => (
               <article key={post.slug} style={{ background: "var(--bg)", padding: "32px 28px", display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                   <span style={{
                     fontSize: 9, fontFamily: "monospace", letterSpacing: "0.1em", textTransform: "uppercase",
                     padding: "2px 8px", border: "1px solid currentColor", borderRadius: 2,
-                    color: catColors[post.category] || "var(--t3)"
+                    color: catColors[post.primaryCategory?.name ?? ""] || "var(--t3)"
                   }}>
-                    {post.category}
+                    {post.primaryCategory?.name ?? "Analysis"}
                   </span>
-                  <span className="lbl">{post.readTime}</span>
+                  <span className="lbl">{readingMinutes(post.bodyHtml)} min read</span>
                 </div>
                 <h3 style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.35, flex: "none" }}>
                   <Link href={`/blog/${post.slug}`} style={{ color: "var(--t1)" }}>
@@ -191,7 +112,7 @@ export default function BlogPage() {
                 </h3>
                 <p className="body" style={{ fontSize: 13, lineHeight: 1.68, flex: 1 }}>{post.excerpt}</p>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 8, borderTop: "1px solid var(--bdr)" }}>
-                  <span className="lbl" style={{ color: "var(--t3)" }}>{post.date}</span>
+                  <span className="lbl" style={{ color: "var(--t3)" }}>{formatDate(post.publishedAt)}</span>
                   <Link href={`/blog/${post.slug}`} style={{ fontSize: 12, color: "var(--acc)", fontFamily: "monospace" }}>
                     Read →
                   </Link>
