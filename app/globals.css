@@ -348,3 +348,83 @@ canvas, img, svg { display: block; max-width: 100%; }
 @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
 .live-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--good); animation: pulse 2s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* ---------------------------------------------------------------------------
+   Article body (CMS-authored HTML).
+
+   The blog renders `bodyHtml` straight from the CMS, so these tags arrive with
+   no classes to hook. Without rules here the browser default applies to a
+   `line-height: 1.5` body: paragraphs ran together with no gap, headings were
+   indistinguishable from body text, and links took the inherited colour so a
+   reader could not see them at all.
+   ------------------------------------------------------------------------- */
+.post-body { font-size: 16.5px; line-height: 1.75; color: var(--t2); }
+
+.post-body > * + * { margin-top: 1.15em; }
+.post-body p { margin: 0; }
+
+.post-body h2,
+.post-body h3,
+.post-body h4 {
+  color: var(--t1);
+  letter-spacing: -.03em;
+  line-height: 1.2;
+  text-wrap: balance;
+  margin-top: 2.2em;
+  margin-bottom: -.35em; /* cancels part of the sibling gap so the heading hugs its text */
+}
+.post-body h2 { font-size: clamp(22px, 2.4vw, 30px); font-weight: 620; }
+.post-body h3 { font-size: clamp(18px, 1.9vw, 22px); font-weight: 600; }
+.post-body h4 { font-size: 17px; font-weight: 600; }
+.post-body > :first-child { margin-top: 0; }
+
+.post-body a {
+  color: var(--acc);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--acc-bdr);
+  transition: text-decoration-color .12s;
+}
+.post-body a:hover { text-decoration-color: var(--acc); }
+
+.post-body strong { color: var(--t1); font-weight: 600; }
+.post-body em { font-style: italic; }
+
+.post-body ul,
+.post-body ol { padding-left: 1.4em; }
+.post-body li { margin-top: .5em; }
+.post-body li::marker { color: var(--t3); }
+
+.post-body blockquote {
+  border-left: 3px solid var(--acc);
+  padding: 2px 0 2px 18px;
+  color: var(--t1);
+}
+
+.post-body code {
+  font-family: var(--font-mono, monospace);
+  font-size: .92em;
+  background: var(--bg1);
+  border: 1px solid var(--bdr);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+.post-body pre {
+  background: var(--bg1);
+  border: 1px solid var(--bdr);
+  border-radius: 3px;
+  padding: 16px;
+  overflow-x: auto;
+}
+.post-body pre code { background: none; border: 0; padding: 0; }
+
+.post-body img { max-width: 100%; height: auto; display: block; }
+
+/* Generated charts bring their own light card, so they must not inherit the
+   page's dark type colour. They already carry inline colours; this only keeps
+   the spacing consistent with the rest of the body. */
+.post-body figure { margin: 2em 0; }
+.post-body figure.onsite-chart { margin: 2.2em 0; }
+
+.post-body hr { border: 0; border-top: 1px solid var(--bdr); margin: 2.4em 0; }
