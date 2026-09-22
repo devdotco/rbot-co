@@ -360,8 +360,11 @@ canvas, img, svg { display: block; max-width: 100%; }
    ------------------------------------------------------------------------- */
 .post-body { font-size: 16.5px; line-height: 1.75; color: var(--t2); }
 
+/* Order and specificity both matter: `.post-body p { margin: 0 }` is MORE specific
+   than `.post-body > * + *`, so written that way it cancelled the spacing and every
+   paragraph ran into the next. These two have equal specificity, so the later wins. */
+.post-body > * { margin: 0; }
 .post-body > * + * { margin-top: 1.15em; }
-.post-body p { margin: 0; }
 
 .post-body h2,
 .post-body h3,
