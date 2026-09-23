@@ -8,6 +8,7 @@ export default function Footer() {
         <div className="footer-brand">
           <div className="footer-logo">RBOT</div>
           <div className="footer-tag">Physical AI. Deployed.</div>
+          <a className="footer-tel" href="tel:+12068646484">+1 (206) 864-6484</a>
         </div>
         {footerCols.map(col => (
           <div key={col.title} className="footer-col">
