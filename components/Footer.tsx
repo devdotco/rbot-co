@@ -25,6 +25,10 @@ export default function Footer() {
       </div>
       <div className="footer-bot">
         <span>© 2026 RBOT. All rights reserved.</span>
+        <span className="footer-legal">
+          <Link href="/privacy-policy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+        </span>
         <span className="mono" style={{ fontSize: "10.5px" }}>Physical AI Infrastructure</span>
       </div>
     </footer>
